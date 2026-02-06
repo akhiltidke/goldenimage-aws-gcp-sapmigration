@@ -1,0 +1,27 @@
+- name: SAP SLES 15 SP6 OS Hardening and Host Agent Setup
+  hosts: all
+  become: yes
+  tasks:
+    - name: OS Hardning SLES SAP patterns # SAP patterns are installed
+      zypper:
+        name: 'patterns-sles-sap_server'
+        state: present
+
+    - name: Deploy SAP Host Agent
+      copy:
+        src: ./files/saphostagent.rpm
+        dest: /tmp/saphostagent.rpm
+
+    - name: Install SAP Host Agent
+      zypper:
+        name: /tmp/saphostagent.rpm
+        state: present
+
+    - name: Tune Kernel Parameters for SAP HANA
+      sysctl:
+        name: "{{ item.key }}"
+        value: "{{ item.value }}"
+        state: present
+      with_items:
+        - { key: 'vm.max_map_count', value: '2147483647' }
+        - { key: 'kernel.shmmax', value: '1073741824' }
