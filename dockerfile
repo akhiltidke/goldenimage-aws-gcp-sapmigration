@@ -4,7 +4,7 @@ FROM suse/sles15sp6:latest
 RUN zypper install -y terraform ansible python3-pip git curl #if u get the error please run registercloudguest --force
 
 # Set up working directory for MG-Motors Project
-WORKDIR /infra-automation
+WORKDIR /usr/sap/ECCC-DATA
 
 # Copy local modules
 COPY . .
