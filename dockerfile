@@ -7,7 +7,7 @@ RUN zypper install -y terraform ansible python3-pip git curl #if u get the error
 WORKDIR /usr/sap/ECCC-DATA
 
 # Copy local modules
-COPY . .
+COPY . /usr/sap/ECCC-DATA
 
 # Initialize environment
 ENTRYPOINT ["/bin/bash"]
